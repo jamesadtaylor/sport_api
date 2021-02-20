@@ -6,25 +6,25 @@ from flask import Flask, jsonify
 
 from flask_swagger import swagger
 
-from sports.config import URL_LAST_FIVE_RESULTS
-from sports.fixture import Fixture
+from config import URL_LAST_FIVE_RESULTS
+from fixture import Fixture
 
-app = Flask(__name__)
+server = Flask(__name__)
 
 
-@app.route('/')
+@server.route('/')
 def blank() -> str:
     """hello world method"""
     return "Nothing here!!!"
 
 
-@app.route("/spec")
+@server.route("/spec")
 def spec():
     """stub for swagger end points"""
-    return jsonify(swagger(app))
+    return jsonify(swagger(server))
 
 
-@app.route('/previousfivegames')
+@server.route('/previousfivegames')
 def last_leeds_5_games():
     """
     Returns the last 5 results Leeds United played
@@ -44,4 +44,4 @@ def transform_response(_json: dict) -> str:
 
 
 if __name__ == '__main__':
-    app.run()
+    server.run(debug=True, host='0.0.0.0')
